@@ -4,7 +4,7 @@ var request = require("request");
 var dataMap = new Map();
 var urlList = []
 http.createServer(function(req,res){
-    console.log(req.url);   
+    console.log("[url]"+req.url);   
     // req.pipe(request({
     //     method:'GET',
     //     url:req.url,
@@ -18,6 +18,7 @@ http.createServer(function(req,res){
             url:req.url,
         },function(err,data){
             //console.log(data.request.href);
+            //console.log(data.body);
             dataMap.set(data.request.href,data.body);
         })).pipe(res);
     }
@@ -27,11 +28,13 @@ http.createServer(function(req,res){
             method:'POST',
             url:req.url,
         },function(err,data){
+            //console.log(data.request.href);
+            //console.log(data.body);
             dataMap.set(data.request.href,data.body);
         })).pipe(res);
     }
 
-    //console.log("url = " + dataMap[]);
+    console.log(dataMap);
     // res.writeHead(200,{'Content-Type':'text/plain'});
     // res.end('Hello World\n');
 }).listen(3000);

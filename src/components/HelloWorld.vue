@@ -24,7 +24,11 @@ import global_ from './Global.vue'
     mounted() {   
         var ws = new WebSocket('ws://sz-wxsq-0744a:5000/');
         ws.onmessage = function(event) {
-          console.log('url is: ' + event.data);
+          //console.log('url is: ' + event.data);
+          if(event.data.indexOf('[url]') != -1)
+          {
+            
+          }
           global_.tableData.push({ url: event.data });
         }     
     },
@@ -36,6 +40,6 @@ import global_ from './Global.vue'
 
 <style scoped>
   .table{
-    float:left;
+    
   }
 </style>

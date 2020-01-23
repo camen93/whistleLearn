@@ -1,5 +1,5 @@
 <template>
-    <div class="button">
+    <div class="button" style="text-align: left;">
         <el-button v-on:click="clearList">清空列表</el-button>
     </div>
 </template>
@@ -22,7 +22,6 @@ import global_ from "./Global.vue"
 
 <style scoped>
     .button{
-        float:left;
         margin:20px;
     }
 </style>

@@ -7,14 +7,15 @@
       </el-table>
     </el-main>
     <el-aside width="50%">
-      <el-input  type="textarea" :rows="15" placeholder="request header" v-model="requestHeader"></el-input>
-      <el-input  type="textarea" :rows="15" placeholder="response" v-model="responsetext" style="margin-top: 10px;"></el-input>
+      <el-input type="textarea" :rows="15" placeholder="request header" v-model="requestHeader"></el-input>
+      <el-input type="textarea" :rows="15" placeholder="response" v-model="responsetext" style="margin-top: 10px;"></el-input>
     </el-aside>
   </el-container>
 </template>
 
 <script>
 import global_ from './Global.vue'
+import Vue from 'vue'
   export default {
     name: 'HelloWorld',
     components: {
@@ -23,8 +24,8 @@ import global_ from './Global.vue'
     data() {
       return {
         tableData: global_.tableData,
-        responsetext: '',
-        requestHeader:'',
+        responsetext: global_.responsetext,
+        requestHeader:global_.requestHeader,
       }
     },
 
@@ -32,7 +33,6 @@ import global_ from './Global.vue'
         var ws = new WebSocket('ws:liuyuxideMacBook-Pro.local:5000/');
         ws.onmessage = function(event) {
           //console.log('url is: ' + JSON.parse(event.data).url);
-          //console.log('url is: ' + JSON.parse(event.data).type + ", " + JSON.parse(event.data).url);
           if(JSON.parse(event.data).type == "req")
           {
             global_.tableData.push({ url: JSON.parse(event.data).url, method: JSON.parse(event.data).method});
@@ -45,14 +45,14 @@ import global_ from './Global.vue'
  
     methods:{
       getUrl:function(row){
-        console.log(global_.dataMap.get(row.url));
+        //console.log(global_.dataMap.get(row.url));
         var data = global_.dataMap.get(row.url);
         if(data.hasOwnProperty("responseHeader") && data.hasOwnProperty("body")){
-          this.responsetext = "statusCode: " + '\n' + data.statusCode + "\n response headers:" + '\n' + JSON.stringify(global_.dataMap.get(row.url).responseHeader) 
-                            + '\nresponse body:' + '\n' + global_.dataMap.get(row.url).body;
+          this.responsetext = "statusCode: " + '\n' + data.statusCode + "\n response headers:" + '\n' + JSON.stringify(data.responseHeader)
+                            + '\nresponse body:' + '\n' + data.body;
         }
         if(data.hasOwnProperty("requestHeader")){
-          this.requestHeader = JSON.stringify(global_.dataMap.get(row.url).requestHeader);
+          this.requestHeader = JSON.stringify(data.requestHeader);
         }
       }
     }

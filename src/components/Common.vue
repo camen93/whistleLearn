@@ -13,8 +13,10 @@ import global_ from "./Global.vue"
         },
         methods:{
             clearList:function(event){
-                console.log(global_.tableData.length);
+                //console.log(global_.tableData.length);
                 global_.tableData.splice(0,global_.tableData.length);
+                global_.responsetext = '';
+                global_.requestHeader = '';
             }
         }
     }
